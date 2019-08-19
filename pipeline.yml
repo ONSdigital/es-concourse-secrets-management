@@ -1,0 +1,36 @@
+---
+resources:
+  - name: echoparam
+    type: git
+    source:
+      uri: https://github.com/ONSdigital/echo-param.git
+      branch: master
+
+  - name: hello-secrets-docker-image
+    type: docker-image
+    source:
+      email: ((docker-hub-email))
+      username: ((docker-hub-username))
+      password: ((docker-hub-password))
+      repository: ((docker-hub-username))/concourse-hello-secrets
+
+jobs:
+  - name: publish
+    public: true
+    plan:
+      - get: echoparam
+      - put: hello-secrets-docker-image
+        params:
+          build: echoparam/docker
+      - task: run
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: ((docker-hub-username))/concourse-hello-secrets
+          run:
+            path: /bin/hello-world
+            args: []
+          params:
+            NAME: ((my-name-is))

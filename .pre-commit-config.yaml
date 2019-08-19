@@ -1,0 +1,14 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.2.3
+    hooks:
+      - id: check-merge-conflict
+  - repo: https://github.com/bitmonkey/git-diff-check
+    rev: 37d034abb7a5c0b4fd43b1a123efe8f2c00c5f8a
+    hooks:
+      - id: git-diff-check
+  - repo: https://github.com/adrienverge/yamllint.git
+    sha: v1.17.0
+    hooks:
+      - id: yamllint
